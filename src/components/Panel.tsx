@@ -13,10 +13,16 @@ function Panel({ children }: Props) {
         setElements(newElements);
     }
 
+    function handleRemove() {
+        const newElements = elements.slice(0, -1);
+        setElements(newElements);
+    }
+
     return (
         <div style={{ margin: 'auto', marginTop: '20px', minHeight: '100vh', overflow: 'auto' }}>
-            <div>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <button style={{ margin: '5px' }} onClick={handleClick}>Add Value</button>
+                <button style={{ margin: '5px' }} onClick={handleRemove}>Remove Value</button>
             </div>
             <div>
                 {elements.map((value, index) => (
