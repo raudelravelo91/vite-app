@@ -1,16 +1,16 @@
 import { ReactNode, useState } from 'react';
+import Message from './Message';
 
-interface Props {
-    children: ReactNode;
-}
+function Panel() {
+    const [elements, setElements] = useState<ReactNode[]>([]);
 
-function Panel({ children }: Props) {
-    const [elements, setElements] = useState<ReactNode[]>([children]);
+    const [inputValue, setInputValue] = useState('');
 
     function handleClick() {
-        const newElement = <div key={elements.length}>{children}</div>;
+        const newElement = <div key={elements.length}><Message message={inputValue} /></div>;
         const newElements = [...elements, newElement];
         setElements(newElements);
+        setInputValue('');
     }
 
     function handleRemove() {
@@ -18,9 +18,14 @@ function Panel({ children }: Props) {
         setElements(newElements);
     }
 
+    function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
+        setInputValue(event.target.value);
+    }
+
     return (
         <div style={{ margin: 'auto', marginTop: '20px', minHeight: '100vh', overflow: 'auto' }}>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <input style={{ margin: '5px' }} type="text" value={inputValue} onChange={handleInputChange} />
                 <button style={{ margin: '5px' }} onClick={handleClick}>Add Value</button>
                 <button style={{ margin: '5px' }} onClick={handleRemove}>Remove Value</button>
             </div>

@@ -11,9 +11,7 @@ function App() {
 
   return (
     <div className="App">
-      <Panel>
-        <Message message='Raudel message test'/>
-        </Panel>
+      <Panel/>
     </div>
   )
 }

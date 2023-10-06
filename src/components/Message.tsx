@@ -5,7 +5,7 @@ interface Props{
 }
 
 function Message({message}: Props){
-    const [modifiedMessage, setModifiedMessage] = useState(message);
+    const [modifiedMessage, setModifiedMessage] = useState(message.toLowerCase());
     const [isUpperCase, setIsUpperCase] = useState(false);
     
     function handleClick(){
