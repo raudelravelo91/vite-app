@@ -1,24 +1,31 @@
 import { ReactNode, useState, useRef } from 'react';
 import Message from './Message';
 
-function Panel() {
+interface Props{
+    OnRemove: () => void;
+    OnAdd: () => void;
+}
+
+function Panel({OnRemove, OnAdd}: Props): JSX.Element {
     const [elements, setElements] = useState<ReactNode[]>([]);
 
     const [inputValue, setInputValue] = useState('');
 
     const inputRef = useRef<HTMLInputElement>(null);
 
-    function handleClick() {
+    function handleAdd() {
         const newElement = <div key={elements.length}><Message message={inputValue} /></div>;
         const newElements = [...elements, newElement];
         setElements(newElements);
         setInputValue('');
+        OnAdd();
         inputRef.current?.focus();
     }
 
     function handleRemove() {
         const newElements = elements.slice(0, -1);
         setElements(newElements);
+        OnRemove();
         inputRef.current?.focus();
     }
 
@@ -30,7 +37,7 @@ function Panel() {
         <div style={{ margin: 'auto', marginTop: '20px', minHeight: '100vh', overflow: 'auto' }}>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <input style={{ margin: '5px' }} type="text" value={inputValue} onChange={handleInputChange} ref={inputRef} />
-                <button style={{ margin: '5px' }} onClick={handleClick} disabled={inputValue.length === 0}>Add Value</button>
+                <button style={{ margin: '5px' }} onClick={handleAdd} disabled={inputValue.length === 0}>Add Value</button>
                 <button style={{ margin: '5px' }} onClick={handleRemove} disabled={elements.length === 0}>Remove Value</button>
             </div>
             <div>
