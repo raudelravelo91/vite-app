@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-interface Props{
+export interface MessageProps{
     message: string;
 }
 
-function Message({message}: Props){
+function Message({message}: MessageProps){
     const [modifiedMessage, setModifiedMessage] = useState(message.toLowerCase());
     const [isUpperCase, setIsUpperCase] = useState(false);
     

@@ -1,5 +1,5 @@
 import { ReactNode, useState, useRef } from 'react';
-import Message from './Message';
+import Message, { MessageProps } from './Message';
 
 interface Props{
     OnRemove: () => void;
@@ -7,14 +7,14 @@ interface Props{
 }
 
 function Panel({OnRemove, OnAdd}: Props): JSX.Element {
-    const [elements, setElements] = useState<ReactNode[]>([]);
+    const [elements, setElements] = useState<MessageProps[]>([]);
 
     const [inputValue, setInputValue] = useState('');
 
     const inputRef = useRef<HTMLInputElement>(null);
 
     function handleAdd() {
-        const newElement = <div key={elements.length}><Message message={inputValue} /></div>;
+        const newElement = { message: inputValue };
         const newElements = [...elements, newElement];
         setElements(newElements);
         setInputValue('');
@@ -41,9 +41,11 @@ function Panel({OnRemove, OnAdd}: Props): JSX.Element {
                 <button style={{ margin: '5px' }} onClick={handleRemove} disabled={elements.length === 0}>Remove Value</button>
             </div>
             <div>
-                {elements.map((message, index) => (
-                    <div key={index}>{message}</div>
-                ))}
+                {elements.map((prop, index) => 
+                    <div>
+                        <Message message={prop.message} />
+                    </div>
+                )}
             </div>
         </div>
     );
