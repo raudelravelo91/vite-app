@@ -1,12 +1,12 @@
 import { ReactNode, useState, useRef } from 'react';
 import Message, { MessageProps } from './Message';
 
-interface Props{
+interface PanelProps{
     OnRemove: () => void;
     OnAdd: () => void;
 }
 
-function Panel({OnRemove, OnAdd}: Props): JSX.Element {
+function Panel({OnRemove, OnAdd}: PanelProps): JSX.Element {
     const [elements, setElements] = useState<MessageProps[]>([]);
 
     const [inputValue, setInputValue] = useState('');

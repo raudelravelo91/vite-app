@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-interface Props{
+interface NavBarProps{
     count: number;
 }
 
-function NavBar({count}: Props){
+function NavBar({count}: NavBarProps){
 
     return( 
         <div style={{ border: '2px solid black', padding: '5px', display: 'inline-block', margin: '2px'}}>
