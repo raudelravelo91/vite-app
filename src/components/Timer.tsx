@@ -3,23 +3,28 @@ import { useState, useEffect } from "react";
 interface TimerProps{
     seconds: number;
     OnTimeOut: () => void;
-    stopTimer: boolean;
 }
 
-function Timer({seconds, OnTimeOut, stopTimer}: TimerProps){
+function Timer({seconds, OnTimeOut}: TimerProps){
+    const [stopTimer, setStopTimer] = useState(false);
     const [time, setTime] = useState(new Date(0, 0, 0, 0, 0, seconds));
 
     useEffect(() => {
-        const intervalId = setInterval(() => {
-            setTime(prevTime => new Date(prevTime.getTime() - 1000));
-        }, 1000);
+        let intervalId: any;
+        let timeoutId: any;
 
-        const timeoutId = setTimeout(() => {
-            console.log("Timeout executed");
-            OnTimeOut();
-        }, seconds * 1000);
+        if(!stopTimer){
+            intervalId = setInterval(() => {
+                setTime(prevTime => new Date(prevTime.getTime() - 1000));
+            }, 1000);
 
-        if (stopTimer) {
+            timeoutId = setTimeout(() => {
+                console.log("Timeout");
+                OnTimeOut();
+                setStopTimer(true);
+            }, seconds * 1000);
+        }
+        else {
             clearInterval(intervalId);
             clearTimeout(timeoutId);
         }
