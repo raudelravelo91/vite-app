@@ -12,8 +12,8 @@ function App() {
 
   return (
     <div className="App">
-      <NavBar count={count}/>
-      <Panel OnRemove={() => setCount(count-1)} OnAdd={() => setCount(count + 1)}/>
+      <NavBar key='NavBar' count={count}/>
+      <Panel key='Panel' OnRemove={() => setCount(count-1)} OnAdd={() => setCount(count + 1)}/>
     </div>
   )
 }

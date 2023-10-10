@@ -42,8 +42,8 @@ function Panel({OnRemove, OnAdd}: Props): JSX.Element {
             </div>
             <div>
                 {elements.map((prop, index) => 
-                    <div>
-                        <Message message={prop.message} />
+                    <div key={"div" + index}>
+                        <Message key={index} message={prop.message} />
                     </div>
                 )}
             </div>
