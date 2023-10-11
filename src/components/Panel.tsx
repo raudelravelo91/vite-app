@@ -1,4 +1,4 @@
-import { ReactNode, useState, useRef } from 'react';
+import { ReactNode, useState, useRef, ButtonHTMLAttributes } from 'react';
 import Message, { MessageProps } from './Message';
 
 interface PanelProps{
@@ -8,18 +8,17 @@ interface PanelProps{
 
 function Panel({OnRemove, OnAdd}: PanelProps): JSX.Element {
     const [elements, setElements] = useState<MessageProps[]>([]);
-
-    const [inputValue, setInputValue] = useState('');
-
     const inputRef = useRef<HTMLInputElement>(null);
+    const addRef = useRef<HTMLButtonElement>(null);
+    updateDisableAdd();
 
     function handleAdd() {
-        const newElement = { message: inputValue };
+        const newElement = { message: inputRef.current?.value??"" };
         const newElements = [...elements, newElement];
         setElements(newElements);
-        setInputValue('');
         OnAdd();
         inputRef.current?.focus();
+        inputRef.current!.value = "";
     }
 
     function handleRemove() {
@@ -29,15 +28,19 @@ function Panel({OnRemove, OnAdd}: PanelProps): JSX.Element {
         inputRef.current?.focus();
     }
 
+    function updateDisableAdd() { 
+        addRef.current!.disabled = inputRef.current?.value === "";
+    }
+
     function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
-        setInputValue(event.target.value);
+        updateDisableAdd();
     }
 
     return (
         <div style={{ margin: 'auto', marginTop: '20px', minHeight: '100vh', overflow: 'auto' }}>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <input style={{ margin: '5px' }} type="text" value={inputValue} onChange={handleInputChange} ref={inputRef} />
-                <button style={{ margin: '5px' }} onClick={handleAdd} disabled={inputValue.length === 0}>Add Value</button>
+                <input style={{ margin: '5px' }} type="text" onChange={handleInputChange} ref={inputRef} />
+                <button style={{ margin: '5px' }} onClick={handleAdd} ref={addRef}>Add Value</button>
                 <button style={{ margin: '5px' }} onClick={handleRemove} disabled={elements.length === 0}>Remove Value</button>
             </div>
             <div>
